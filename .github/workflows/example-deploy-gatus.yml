@@ -46,7 +46,6 @@ jobs:
 
       - name: Update Configuration
         run: |
-          # Update config from the gatus directory
           cd gatus
           sed -i "s|<github-token>|$TOKEN|g" config/config.yaml
           sed -i "s|<leantime-url>|$LEANTIME_URL|g" config/config.yaml
