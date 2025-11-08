@@ -12,6 +12,7 @@ env:
   ECS_GATUS_SERVICE: "gatus-service"
   GATUS_TASK_DEFINITION: "gatus/task-definition.json"
   GATUS_URL: "${{ secrets.ALB_ENDPOINT }}:8080"
+  LEANTIME_URL: "${{ secrets.ALB_ENDPOINT }}"
 # FILL THE MISSING VALUES ABOVE
 
 permissions:
