@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 env:
   AWS_REGION: "us-east-1"
-  ECR_REPOSITORY: "732839262434.dkr.ecr.us-east-1.amazonaws.com/lks-gatus"
+  ECR_REPOSITORY: "lks-gatus"
   ECS_CLUSTER: "lks-oss-cluster"
   TOKEN: "${{ secrets.TOKEN }}"
 
