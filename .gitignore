@@ -25,3 +25,7 @@ node_modules
 cache/
 build/
 
+.terraform.lock.hcl
+.terraform
+
+.github/workflows/example-build-gatus.yml

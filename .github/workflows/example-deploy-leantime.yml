@@ -5,14 +5,14 @@ on:
   workflow_dispatch:
 
 env:
-  AWS_REGION:
-  ECR_REPOSITORY:
-  ECS_CLUSTER:
-  TOKEN: ${{ secrets.TOKEN }}
+  AWS_REGION: "${{ secrets.AWS_REGION }}"
+  ECR_REPOSITORY: "${{ secrets.ECR_REPOSITORY }}"
+  ECS_CLUSTER: "${{ secrets.ECS_CLUSTER }}"
+  TOKEN: "${{ secrets.TOKEN }}"
 
-  ECS_LEANTIME_SERVICE:
-  LEANTIME_TASK_DEFINITION:
-  LEANTIME_URL: "??? ${{ secrets.ALB_ENDPOINT }} ???"
+  ECS_LEANTIME_SERVICE: "leantime-service"
+  LEANTIME_TASK_DEFINITION: "leantime/task-definition.json"
+  LEANTIME_URL: "${{ secrets.ALB_ENDPOINT }}"
 # FILL THE MISSING VALUES ABOVE
 
 permissions:
@@ -22,7 +22,7 @@ jobs:
   deploy:
     name: Deploy Leantime App
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
     steps:
       - name: Checkout
         uses: actions/checkout@v4
