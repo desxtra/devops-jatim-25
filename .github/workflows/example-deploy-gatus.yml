@@ -4,9 +4,9 @@ name: Example Gatus' Job (2/2) - Deploy Gatus
 on:
   workflow_dispatch:
 env:
-  AWS_REGION: "${{ secrets.AWS_REGION }}"
+  AWS_REGION: "us-east-1"
   ECR_REPOSITORY: "732839262434.dkr.ecr.us-east-1.amazonaws.com/lks-gatus"
-  ECS_CLUSTER: "${{ secrets.ECS_CLUSTER }}"
+  ECS_CLUSTER: "lks-oss-cluster"
   TOKEN: "${{ secrets.TOKEN }}"
 
   ECS_GATUS_SERVICE: "gatus-service"
