@@ -2,6 +2,7 @@
 alerting:
   github:
     token: "<github-token>" # WARN: DO NOT CHANGE THIS LINE
+    repository-url: "https://github.com/desxtra/devops-jatim-25"
     send-on-resolved: true
     failure-threshold: 3
     success-threshold: 5
