@@ -1,7 +1,7 @@
 {
   "family": "lks-gatus-app",
-  "taskRoleArn": "",
-  "executionRoleArn": "",
+  "taskRoleArn": "arn:aws:iam::732839262434:role/LabRole",
+  "executionRoleArn": "arn:aws:iam::732839262434:role/LabRole",
   "networkMode": "awsvpc",
   "volumes": [],
   "placementConstraints": [],
