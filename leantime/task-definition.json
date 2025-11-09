@@ -30,7 +30,28 @@
           "protocol": "tcp"
         }
       ],
-      "secrets": [],
+      "secrets": [
+        {
+          "name": "LEAN_DB_HOST",
+          "valueFrom": "arn:aws:ssm:us-east-1:732839262434:parameter/lks/db/host"
+        },
+        {
+          "name": "LEAN_DB_USER",
+          "valueFrom": "arn:aws:ssm:us-east-1:732839262434:parameter/lks/db/username"
+        },
+        {
+          "name": "LEAN_DB_PASSWORD",
+          "valueFrom": "arn:aws:ssm:us-east-1:732839262434:parameter/lks/db/password"
+        },
+        {
+          "name": "LEAN_DB_DATABASE",
+          "valueFrom": "arn:aws:ssm:us-east-1:732839262434:parameter/lks/db/name"
+        },
+        {
+          "name": "LEAN_DB_PORT",
+          "valueFrom": "arn:aws:ssm:us-east-1:732839262434:parameter/lks/db/port"
+        }
+      ],
       "environment": [],
       "mountPoints": [],
       "logConfiguration": {
