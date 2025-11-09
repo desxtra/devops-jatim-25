@@ -6,7 +6,7 @@ on:
 
 env:
   AWS_REGION: "us-east-1"
-  ECR_REPOSITORY: "lks-leantime"
+  # ECR_REPOSITORY: "lks-leantime"
   ECS_CLUSTER: "lks-oss-cluster"
   TOKEN: "${{ secrets.TOKEN }}"
 
