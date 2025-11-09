@@ -6,41 +6,7 @@
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "1024",
   "memory": "2048",
-  "volumes": [
-    {
-      "efsVolumeConfiguration": {
-        "authorizationConfig": {
-          "accessPointId": "fsap-0d58b96a6c32a42c1",
-          "iam": "ENABLED"
-        },
-        "fileSystemId": "fs-0549e2504d1251e05",
-        "transitEncryption": "ENABLED"
-      },
-      "name": "pub-userfiles"
-    },
-    {
-      "efsVolumeConfiguration": {
-        "authorizationConfig": {
-          "accessPointId": "fsap-0dc0d3258267f8c78",
-          "iam": "ENABLED"
-        },
-        "fileSystemId": "fs-0549e2504d1251e05",
-        "transitEncryption": "ENABLED"
-      },
-      "name": "userfiles"
-    },
-    {
-      "efsVolumeConfiguration": {
-        "authorizationConfig": {
-          "accessPointId": "fsap-0455b0b277c95b46a",
-          "iam": "ENABLED"
-        },
-        "fileSystemId": "fs-0549e2504d1251e05",
-        "transitEncryption": "ENABLED"
-      },
-      "name": "plugins"
-    }
-  ],
+  "volumes": [],
   "placementConstraints": [],
   "runtimePlatform": {
     "cpuArchitecture": "X86_64",
@@ -66,23 +32,7 @@
       ],
       "secrets": [],
       "environment": [],
-      "mountPoints": [
-        {
-          "containerPath": "/var/www/html/public/userfiles",
-          "readOnly": false,
-          "sourceVolume": "pub-userfiles"
-        },
-        {
-          "containerPath": "/var/www/html/userfiles",
-          "readOnly": false,
-          "sourceVolume": "userfiles"
-        },
-        {
-          "containerPath": "/var/www/html/app/Plugins",
-          "readOnly": false,
-          "sourceVolume": "plugins"
-        }
-      ],
+      "mountPoints": [],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
