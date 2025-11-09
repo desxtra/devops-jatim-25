@@ -22,7 +22,7 @@ services:
     volumes:
       - public_userfiles:/var/www/html/public/userfiles
       - userfiles:/var/www/html/userfiles
-      - plugins:/var/www/html/app/Plugins
+      - plugins:/var/www/html/app/plugins
     ports:
       - "${LEAN_PORT}:8080"
     depends_on:
