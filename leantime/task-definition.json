@@ -50,7 +50,6 @@
     "operatingSystemFamily": "LINUX"
   },
   "enableFaultInjection": false,
-
   "containerDefinitions": [
     {
       "name": "leantime",
@@ -61,10 +60,8 @@
       "systemControls": [],
       "portMappings": [
         {
-          "appProtocol": "http",
           "containerPort": 8080,
           "hostPort": 8080,
-          "name": "default",
           "protocol": "tcp"
         }
       ],
