@@ -14,7 +14,7 @@ services:
 
   leantime:
     image: leantime/leantime:latest
-    container_name: leantime
+    # container_name: leantime
     restart: unless-stopped
     env_file: ./.env
     networks:
