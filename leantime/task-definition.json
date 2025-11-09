@@ -32,27 +32,36 @@
       ],
       "secrets": [
         {
-          "name": "LEAN_DB_HOST",
+          "name": "MYSQL_HOST",
           "valueFrom": "arn:aws:ssm:us-east-1:732839262434:parameter/lks/db/host"
         },
         {
-          "name": "LEAN_DB_USER",
+          "name": "MYSQL_USER",
           "valueFrom": "arn:aws:ssm:us-east-1:732839262434:parameter/lks/db/username"
         },
         {
-          "name": "LEAN_DB_PASSWORD",
+          "name": "MYSQL_ROOT_PASSWORD",
           "valueFrom": "arn:aws:ssm:us-east-1:732839262434:parameter/lks/db/password"
         },
         {
-          "name": "LEAN_DB_DATABASE",
+          "name": "MYSQL_DATABASE",
           "valueFrom": "arn:aws:ssm:us-east-1:732839262434:parameter/lks/db/name"
         },
         {
-          "name": "LEAN_DB_PORT",
+          "name": "MYSQL_PORT",
           "valueFrom": "arn:aws:ssm:us-east-1:732839262434:parameter/lks/db/port"
         }
       ],
-      "environment": [],
+      "environment": [
+        {
+          "name": "LEAN_DEBUG",
+          "value": "0"
+        },
+        {
+          "name": "LEAN_PORT",
+          "value": "8080"
+        }
+      ],
       "mountPoints": [],
       "logConfiguration": {
         "logDriver": "awslogs",
