@@ -41,6 +41,5 @@ jobs:
           task-definition: ${{ env.LEANTIME_TASK_DEFINITION }}
           service: ${{ env.ECS_LEANTIME_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
-          container-name: "leantime"
           force-new-deployment: true
           run-task-tags: '[{"key": "", "value": ""} , ...]'
