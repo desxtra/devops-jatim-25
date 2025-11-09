@@ -14,7 +14,7 @@
           "iam": "ENABLED"
         },
         "fileSystemId": "fs-0549e2504d1251e05",
-        "rootDirectory": "/",
+        "rootDirectory": "/public_userfiles",
         "transitEncryption": "ENABLED"
       },
       "name": "pub-userfiles"
@@ -26,7 +26,7 @@
           "iam": "ENABLED"
         },
         "fileSystemId": "fs-0549e2504d1251e05",
-        "rootDirectory": "/",
+        "rootDirectory": "/userfiles",
         "transitEncryption": "ENABLED"
       },
       "name": "userfiles"
@@ -38,7 +38,7 @@
           "iam": "ENABLED"
         },
         "fileSystemId": "fs-0549e2504d1251e05",
-        "rootDirectory": "/",
+        "rootDirectory": "/Plugins",
         "transitEncryption": "ENABLED"
       },
       "name": "plugins"
