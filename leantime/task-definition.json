@@ -17,7 +17,7 @@
   "enableFaultInjection": false,
   "containerDefinitions": [
     {
-      "name": "default",
+      "name": "leantime",
       "image": "leantime/leantime:latest",
       "cpu": 0,
       "essential": true,

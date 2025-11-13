@@ -2,7 +2,9 @@ name: Example Gatus' Job (2/2) - Deploy Gatus
 
 # FILL THE MISSING VALUES BELOW
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 env:
   AWS_REGION: "us-east-1"
   ECR_REPOSITORY: "lks-gatus"
