@@ -57,7 +57,7 @@
       "environment": [
         {
           "name": "LEAN_APP_URL",
-          "value": "http://lks-oss-lb-1147229474.us-east-1.elb.amazonaws.com"
+          "value": ""
         },
         {
           "name": "LEAN_APP_DIR",
@@ -70,6 +70,18 @@
         {
           "name": "LEAN_PORT",
           "value": "8080"
+        },
+        {
+          "name": "LEAN_SESSION_PASSWORD",
+          "value": "supersecretpassword"
+        },
+        {
+          "name": "LEAN_SITENAME",
+          "value": "LKS Leantime"
+        },
+        {
+          "name": "LEAN_DEFAULT_TIMEZONE",
+          "value": "Asia/Jakarta"
         }
       ],
       "mountPoints": [],

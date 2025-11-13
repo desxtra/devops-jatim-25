@@ -31,6 +31,10 @@
           "protocol": "tcp"
         }
       ],
+      "command": [
+        "--config",
+        "/config.yaml"
+      ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
