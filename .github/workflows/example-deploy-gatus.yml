@@ -66,101 +66,22 @@ jobs:
           docker push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
           echo "IMAGE_FULL_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
-
-      name: Example Gatus' Job (2/2) - Deploy Gatus
-
-# FILL THE MISSING VALUES BELOW
-on:
-  push:
-    branches:
-      - main
-env:
-  AWS_REGION: "us-east-1"
-  ECR_REPOSITORY: "lks-gatus"
-  ECS_CLUSTER: "lks-oss-cluster"
-  TOKEN: "${{ secrets.TOKEN }}"
-
-  ECS_GATUS_SERVICE: "gatus-service"
-  GATUS_TASK_DEFINITION: "gatus/task-definition.json"
-  GATUS_URL: "${{ secrets.ALB_ENDPOINT }}:8080"
-  LEANTIME_URL: "${{ secrets.ALB_ENDPOINT }}"
-# FILL THE MISSING VALUES ABOVE
-
-permissions:
-  contents: read
-
-jobs:
-  deploy:
-    name: Deploy Gatus App
-    runs-on: ubuntu-latest
-    environment: prod
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-
-      - name: Get Short Commit Hash
-        run: echo "IMAGE_TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-        shell: bash
-
-      - name: Update Configuration
-        run: |
-          cd gatus
-          sed -i "s|<github-token>|$TOKEN|g" config/config.yaml
-          sed -i "s|<leantime-url>|\"$LEANTIME_URL\"|g" config/config.yaml
-          sed -i "s|<gatus-url>|\"$GATUS_URL\"|g" config/config.yaml
-          echo "Configuration updated."
-          cat config/config.yaml
-          
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        run: |
-          cd gatus
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-          echo "IMAGE_FULL_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
-
+      
       - name: Debug Built Image Config
         run: |
           cd gatus
           echo "Building test image to check actual config..."
           docker build -t test-gatus-config .
-          echo "Running container to show config file content:"
-          docker run --rm test-gatus-config cat /config/config.yaml
-          echo "Checking if container can parse config:"
-          docker run --rm test-gatus-config /app/gatus --config /config/config.yaml --help || true
-      
+          echo "Running container to show config file content (using shell to bypass auto-start):"
+          docker run --rm --entrypoint=/bin/sh test-gatus-config -c "cat /config/config.yaml"
+          echo "Checking config file details:"
+          docker run --rm --entrypoint=/bin/sh test-gatus-config -c "ls -la /config/config.yaml && head -20 /config/config.yaml"
+
       - name: Update ECS task definition
         run: |
           sed -i "s|<task-def-image>|$IMAGE_FULL_URI|g" $GATUS_TASK_DEFINITION
           echo "Task definition updated."
           cat $GATUS_TASK_DEFINITION
-
-      - name: deploy ecs task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
-        with:
-          task-definition: ${{ env.GATUS_TASK_DEFINITION }}
-          service: ${{ env.ECS_GATUS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
-          force-new-deployment: true
-          run-task-tags: '[{"key": "", "value": ""} , ...]'
-
 
       - name: deploy ecs task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
