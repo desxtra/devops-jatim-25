@@ -49,41 +49,18 @@ jobs:
       - name: Update Configuration
         run: |
           cd gatus
-          # Create a clean config file instead of using sed
-          cat > config/config.yaml << EOF
-alerting:
-  github:
-    token: "$TOKEN"
-    repository-owner: "desxtra"
-    repository-name: "devops-jatim-25"
-    send-on-resolved: true
-    failure-threshold: 3
-    success-threshold: 5
-
-endpoints:
-  - name: "leantime"
-    url: "$LEANTIME_URL"
-    interval: 30s
-    conditions: 
-      - "[STATUS] == 200"
-      - "[RESPONSE_TIME] < 300"
-    alerts:
-      - type: github
-        description: "Sensei, Leantime is down! Please check and fix it."
-        enabled: true
-
-  - name: "gatus"
-    url: "$GATUS_URL"
-    interval: 60s
-    conditions:
-      - "[STATUS] == 200"
-      - "[RESPONSE_TIME] < 500"
-    alerts:
-      - type: github
-        description: "Sensei, Gatus is down! Please check and fix it."
-        enabled: true
-EOF
-          echo "Configuration updated with clean file"
+          sed -i "s|<github-token>|$TOKEN|g" config/config.yaml
+          echo "Configuration updated."
+          cat config/config.yaml
+          
+      # - name: Update Configuration
+      #   run: |
+      #     cd gatus
+      #     sed -i "s|<github-token>|$TOKEN|g" config/config.yaml
+      #     sed -i "s|<leantime-url>|$LEANTIME_URL|g" config/config.yaml
+      #     sed -i "s|<gatus-url>|$GATUS_URL|g" config/config.yaml
+      #     echo "Configuration updated."
+      #     cat config/config.yaml
           
       - name: Build, tag, and push image to Amazon ECR
         id: build-image

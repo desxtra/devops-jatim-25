@@ -1,20 +1,15 @@
-# FILL IN THE MISSING VALUES BELOW
 alerting:
   github:
-    token: "<github-token>" # WARN: DO NOT CHANGE THIS LINE
-    repository-url: "https://github.com/desxtra/devops-jatim-25"
+    token: "<github-token>"
     repository-owner: "desxtra"
     repository-name: "devops-jatim-25"
     send-on-resolved: true
     failure-threshold: 3
     success-threshold: 5
 
-# FILL IN THE MISSING VALUES ABOVE
-
-# FILL IN THE MISSING VALUES BELOW
 endpoints:
-  - name: "Leantime"
-    url: <leantime-url> # WARN: DO NOT CHANGE THIS LINE
+  - name: "leantime"
+    url: "http://lks-oss-lb-38303394.us-east-1.elb.amazonaws.com"
     interval: 30s
     conditions: 
       - "[STATUS] == 200"
@@ -23,12 +18,9 @@ endpoints:
       - type: github
         description: "Sensei, Leantime is down! Please check and fix it."
         enabled: true
-        send-on-resolved: true
-        failure-threshold: 3
-        success-threshold: 5
 
-  - name: "Gatus"
-    url: <gatus-url> # WARN: DO NOT CHANGE THIS LINE
+  - name: "gatus"
+    url: "http://lks-oss-lb-38303394.us-east-1.elb.amazonaws.com:8080"
     interval: 60s
     conditions:
       - "[STATUS] == 200"
@@ -37,6 +29,3 @@ endpoints:
       - type: github
         description: "Sensei, Gatus is down! Please check and fix it."
         enabled: true
-        send-on-resolved: true
-        failure-threshold: 3
-        success-threshold: 5
