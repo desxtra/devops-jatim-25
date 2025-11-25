@@ -49,11 +49,41 @@ jobs:
       - name: Update Configuration
         run: |
           cd gatus
-          sed -i "s|<github-token>|$TOKEN|g" config/config.yaml
-          sed -i "s|<leantime-url>|\"$LEANTIME_URL\"|g" config/config.yaml
-          sed -i "s|<gatus-url>|\"$GATUS_URL\"|g" config/config.yaml
-          echo "Configuration updated."
-          cat config/config.yaml
+          # Create a clean config file instead of using sed
+          cat > config/config.yaml << EOF
+          alerting:
+            github:
+              token: "$TOKEN"
+              repository-owner: "desxtra"
+              repository-name: "devops-jatim-25"
+              send-on-resolved: true
+              failure-threshold: 3
+              success-threshold: 5
+          
+          endpoints:
+            - name: "leantime"
+              url: "$LEANTIME_URL"
+              interval: 30s
+              conditions: 
+                - "[STATUS] == 200"
+                - "[RESPONSE_TIME] < 300"
+              alerts:
+                - type: github
+                  description: "Sensei, Leantime is down! Please check and fix it."
+                  enabled: true
+          
+            - name: "gatus"
+              url: "$GATUS_URL"
+              interval: 60s
+              conditions:
+                - "[STATUS] == 200"
+                - "[RESPONSE_TIME] < 500"
+              alerts:
+                - type: github
+                  description: "Sensei, Gatus is down! Please check and fix it."
+                  enabled: true
+          EOF
+              echo "Configuration updated with clean file"
           
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
@@ -66,22 +96,6 @@ jobs:
           docker push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
           echo "IMAGE_FULL_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
-      
-      - name: Debug Built Image Config
-        run: |
-          cd gatus
-          echo "Building test image to check actual config..."
-          docker build -t test-gatus-config .
-          echo "Creating container and copying config file out:"
-          docker create --name temp-container test-gatus-config
-          docker cp temp-container:/config/config.yaml ./extracted-config.yaml
-          docker rm temp-container
-          echo "Config file content from built image:"
-          cat extracted-config.yaml
-          echo "Checking for endpoint names in extracted config:"
-          grep -n "name:" extracted-config.yaml
-          echo "Checking for _leantime corruption:"
-          grep -n "_leantime" extracted-config.yaml || echo "No _leantime found"
 
       - name: Update ECS task definition
         run: |
