@@ -2,6 +2,7 @@
 alerting:
   github:
     token: "<github-token>" # WARN: DO NOT CHANGE THIS LINE
+    repository-url: "https://github.com/desxtra/devops-jatim-25"
     repository-owner: "desxtra"
     repository-name: "devops-jatim-25"
     send-on-resolved: true
