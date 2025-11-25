@@ -2,7 +2,8 @@
 alerting:
   github:
     token: "<github-token>" # WARN: DO NOT CHANGE THIS LINE
-    repository-url: "https://github.com/desxtra/devops-jatim-25"
+    repository-owner: "desxtra"
+    repository-name: "devops-jatim-25"
     send-on-resolved: true
     failure-threshold: 3
     success-threshold: 5
@@ -11,7 +12,7 @@ alerting:
 
 # FILL IN THE MISSING VALUES BELOW
 endpoints:
-  - name: Leantime
+  - name: "Leantime"
     url: <leantime-url> # WARN: DO NOT CHANGE THIS LINE
     interval: 30s
     conditions: 
@@ -25,7 +26,7 @@ endpoints:
         failure-threshold: 3
         success-threshold: 5
 
-  - name: Gatus
+  - name: "Gatus"
     url: <gatus-url> # WARN: DO NOT CHANGE THIS LINE
     interval: 60s
     conditions:
