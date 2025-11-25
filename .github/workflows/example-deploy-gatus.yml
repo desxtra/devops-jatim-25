@@ -67,11 +67,21 @@ jobs:
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
           echo "IMAGE_FULL_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
-      - name: Update ECS task definition
+      - name: Debug Built Image Config
         run: |
-          sed -i "s|<task-def-image>|$IMAGE_FULL_URI|g" $GATUS_TASK_DEFINITION
-          echo "Task definition updated."
-          cat $GATUS_TASK_DEFINITION
+          cd gatus
+          echo "Building test image to check actual config..."
+          docker build -t test-gatus-config .
+          echo "Running container to show config file content:"
+          docker run --rm test-gatus-config cat /config/config.yaml
+          echo "Checking if container can parse config:"
+          docker run --rm test-gatus-config /app/gatus --config /config/config.yaml --help || true
+      
+            - name: Update ECS task definition
+              run: |
+                sed -i "s|<task-def-image>|$IMAGE_FULL_URI|g" $GATUS_TASK_DEFINITION
+                echo "Task definition updated."
+                cat $GATUS_TASK_DEFINITION
 
       - name: deploy ecs task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
