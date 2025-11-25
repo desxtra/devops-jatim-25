@@ -72,10 +72,16 @@ jobs:
           cd gatus
           echo "Building test image to check actual config..."
           docker build -t test-gatus-config .
-          echo "Running container to show config file content (using shell to bypass auto-start):"
-          docker run --rm --entrypoint=/bin/sh test-gatus-config -c "cat /config/config.yaml"
-          echo "Checking config file details:"
-          docker run --rm --entrypoint=/bin/sh test-gatus-config -c "ls -la /config/config.yaml && head -20 /config/config.yaml"
+          echo "Creating container and copying config file out:"
+          docker create --name temp-container test-gatus-config
+          docker cp temp-container:/config/config.yaml ./extracted-config.yaml
+          docker rm temp-container
+          echo "Config file content from built image:"
+          cat extracted-config.yaml
+          echo "Checking for endpoint names in extracted config:"
+          grep -n "name:" extracted-config.yaml
+          echo "Checking for _leantime corruption:"
+          grep -n "_leantime" extracted-config.yaml || echo "No _leantime found"
 
       - name: Update ECS task definition
         run: |
