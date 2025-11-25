@@ -41,38 +41,20 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+
       - name: Get Short Commit Hash
         run: echo "IMAGE_TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
         shell: bash
-
-      - name: Debug Original Config
-        run: |
-          cd gatus
-          echo "Original config file content:"
-          cat config/config.yaml
-          echo "Original config file with visible characters:"
-          cat -A config/config.yaml
 
       - name: Update Configuration
         run: |
           cd gatus
           sed -i "s|<github-token>|$TOKEN|g" config/config.yaml
-          sed -i "s|<leantime-url>|$LEANTIME_URL|g" config/config.yaml
-          sed -i "s|<gatus-url>|$GATUS_URL|g" config/config.yaml
+          sed -i "s|<leantime-url>|\"$LEANTIME_URL\"|g" config/config.yaml
+          sed -i "s|<gatus-url>|\"$GATUS_URL\"|g" config/config.yaml
           echo "Configuration updated."
-
-      - name: Debug Updated Config
-        run: |
-          cd gatus
-          echo "Updated config file content:"
           cat config/config.yaml
-          echo "Updated config file with visible characters:"
-          cat -A config/config.yaml
-          echo "Checking for endpoint names:"
-          grep -n "name:" config/config.yaml
-          echo "Checking for URLs:"
-          grep -n "url:" config/config.yaml
-
+          
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
