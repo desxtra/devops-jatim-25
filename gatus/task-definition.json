@@ -33,7 +33,7 @@
       ],
       "command": [
         "--config",
-        "/config/config.yaml"
+        "/config.yaml"
       ],
       "logConfiguration": {
         "logDriver": "awslogs",
